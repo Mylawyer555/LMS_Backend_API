@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
+  password       String
+  firstname      String?
+  lastname       String?
+  role           Role      @default(USER)
+  profilePicture String?
+  emailVerified  Boolean   @default(false)
+  otp            String?
+  otpExpiry      DateTime? @db.Timestamptz(3)
+  createdAt      DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime  @updatedAt
+
+  Enrollment            Enrollment[]
+  InstructorEnrollments Enrollment[]      @relation("InstructorEnrollments")
+  PasswordHistory       PasswordHistory[]
+}
+
+model Course {
+  id          Int          @id @default(autoincrement())
+  title       String       @unique
+  description String?
+  price       Float
+  duration    Int
+  createdAt   DateTime     @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime     @updatedAt
+  Enrollment  Enrollment[]
+}
+
+model Enrollment {
+  id                Int              @id @default(autoincrement())
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId            Int
+  course            Course           @relation(fields: [courseId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  courseId          Int
+  instructor        User?            @relation("InstructorEnrollments", fields: [instructorId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  instructorId      Int?
+  status            EnrollmentStatus @default(ACTIVE)
+  paymentStatus     PaymentStatus    @default(PENDING)
+  payStackReference String?          @unique
+  createdAt         DateTime         @default(now()) @db.Timestamptz(3)
+  updatedAt         DateTime         @updatedAt
+}
+
+model PasswordHistory {
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+  passwordHash String
+  createdAt    DateTime @default(now()) @db.Timestamptz(3)
+}
+
+enum Role {
+  USER
+  ADMIN
+  INSTRUCTOR
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  DROPPED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}

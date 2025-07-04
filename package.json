@@ -1,0 +1,34 @@
+{
+  "name": "lms-backend-api",
+  "version": "1.0.0",
+  "description": "A Learning Management System (LMS) project involves implementing a software application or platform designed to facilitate the administration, delivery, tracking, and reporting of educational courses, training programs, and learning materials.",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "dev": "nodemon src/index.ts"
+  },
+  "keywords": [
+    "Nodejs",
+    "e-learning",
+    "LMS"
+  ],
+  "author": "Samuel Tony Abel",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.3",
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.10.1",
+    "ts-node": "^10.9.2"
+  }
+}
