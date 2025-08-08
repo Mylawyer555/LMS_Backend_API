@@ -4,6 +4,7 @@ import { UserService } from "../user.service";
 import { db } from "../../config/db";
 import { StatusCodes } from "http-status-codes";
 import { CustomError } from "../../exceptions/customError.error";
+import { hashPassword } from "../../utils/passaword.util";
 
 
 export class UserServiceImple implements UserService{
@@ -67,7 +68,7 @@ export class UserServiceImple implements UserService{
        const createUser = await db.user.create({
         data : {
             email : data.email,
-            password: data.password,
+            password: await hashPassword(data.password),
             firstname: data.firstname,
             lastname: data.lastname,
             role: data.role,

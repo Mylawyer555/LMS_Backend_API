@@ -2,6 +2,7 @@
 import dotenv from 'dotenv'
 import cors from 'cors'
 import userRouter from './routes/user.routes';
+import authRouter from './routes/auth.route';
 
 // configure dotenv
 dotenv.config();
@@ -41,9 +42,11 @@ app.use(cors(corsOptions));
 //to read anything convert to json
 app.use(express.json());
 
+app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', userRouter)
 
 // listen to our port
 app.listen(PORT, ()=> {
     console.log( `Congratulations Server is running on port ${PORT}`);
 });
+
