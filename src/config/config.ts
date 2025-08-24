@@ -1,5 +1,5 @@
 import dotenv from 'dotenv'
-import {StringValue} from 'jsonwebtoken'
+import {StringValue} from 'ms'
 
 dotenv.config();
 
@@ -27,11 +27,11 @@ type Config = {
         api_key: string;
         api_secret: string;
     };
-    redis: {
-        host: string;
-        port: string;
-        password?: string;
-    };
+    // redis: {
+    //     host: string;
+    //     port: string;
+    //     password?: string;
+    // };
 }
 
 const configuration:Config = {
@@ -53,11 +53,11 @@ const configuration:Config = {
         api_key: process.env.CLOUDINARY_API_KEY || "",
         api_secret: process.env.CLOUDINARY_API_SECRET || "",
     },
-    redis: {
-        host: process.env.REDIS_HOST || "127.0.0.1",
-        port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT, 10) : 6379,
-        password: process.env.REDIS_PASSWORD,
-    },
+    // redis: {
+    //     host: process.env.REDIS_HOST || "127.0.0.1",
+    //     port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT, 10) : 6379,
+    //     password: process.env.REDIS_PASSWORD,
+    // },
 }
 
 

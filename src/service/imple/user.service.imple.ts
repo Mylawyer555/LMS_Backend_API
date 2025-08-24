@@ -65,7 +65,7 @@ export class UserServiceImple implements UserService{
         throw new CustomError(409, "oops! user alreadly exist")
        }
 
-       const createUser = await db.user.create({
+       const user = await db.user.create({
         data : {
             email : data.email,
             password: await hashPassword(data.password),
@@ -74,7 +74,7 @@ export class UserServiceImple implements UserService{
             role: data.role,
         }
        });
-       return createUser;
+       return user;
     }
     
 }
